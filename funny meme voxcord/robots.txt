@@ -1,0 +1,6 @@
+# Robots configuration — update the Sitemap URL to your final site URL before publishing
+User-agent: *
+Disallow:
+
+# Sitemap (GitHub Pages)
+Sitemap: https://ToutubeVR.github.io/ToutubeVR/sitemap.xml

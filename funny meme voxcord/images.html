@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VRChat Photos — Voxtek Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Blue cyber / VoxTek theme */
+    :root{--bg-1:#021026;--bg-2:#07173a;--accent:#6ff3ff;--muted:#bfeef7;--card-bg:rgba(2,16,38,0.6)}
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Rajdhani",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:radial-gradient(900px 500px at 10% 10%, rgba(57,240,255,0.03), transparent), linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color:var(--muted);
+      text-align:center;
+      overflow-x:hidden;
+    }
+
+    /* animated grid and scanlines */
+    body::before{
+      content:"";position:fixed;inset:0;z-index:0;background-image:linear-gradient(transparent 23px, rgba(37,243,255,0.02) 24px), linear-gradient(90deg, transparent 23px, rgba(37,243,255,0.02) 24px);background-size:24px 24px;opacity:0.6;mix-blend-mode:overlay;pointer-events:none;animation:gridShift 40s linear infinite;
+    }
+    @keyframes gridShift{from{background-position:0 0}to{background-position:480px 480px}}
+    body::after{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;background-image:repeating-linear-gradient(180deg, rgba(0,0,0,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 3px);mix-blend-mode:multiply;opacity:0.35}
+
+    header{
+      padding:48px 20px 28px;
+      position:relative;
+      background:linear-gradient(180deg, rgba(0,8,20,0.6), transparent);
+      border-bottom:1px solid rgba(37,243,255,0.04);
+      z-index:10;
+    }
+
+    header::after{
+      content:"";position:absolute;left:0;bottom:0;width:100%;height:3px;background:linear-gradient(90deg, #25f0ff, #3b9eff, #25f0ff);background-size:200% 100%;animation:glowBar 6s linear infinite;
+    }
+
+    @keyframes glowBar{0%{background-position:0% 0}100%{background-position:200% 0}}
+
+    .header-content{
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#3b9eff);display:flex;align-items:center;justify-content:center;font-family:Orbitron;color:#021022;font-weight:800;box-shadow:0 8px 24px rgba(37,243,255,0.06)}
+    .logo img{width:40px;height:40px;object-fit:contain;border-radius:6px}
+
+    h1{font-family:Orbitron;margin:0;font-size:2rem;color:var(--accent);text-shadow:0 8px 40px rgba(37,243,255,0.06)}
+    p.lead{margin:4px 0 0;color:var(--muted);font-size:0.9rem}
+
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav-link{display:inline-block;padding:8px 12px;border-radius:8px;background:rgba(37,243,255,0.02);color:var(--accent);text-decoration:none;font-weight:600;border:1px solid rgba(37,243,255,0.04);font-size:0.9rem}
+    .nav-link:hover{box-shadow:0 8px 24px rgba(37,243,255,0.06);transform:translateY(-2px)}
+
+    main{
+      max-width:1200px;
+      margin:32px auto;
+      padding:0 16px;
+      position:relative;
+      z-index:5;
+    }
+
+    .gallery-header{margin-bottom:32px}
+    .gallery-header h2{font-family:Orbitron;font-size:1.6rem;color:var(--accent);margin:0 0 8px;text-shadow:0 6px 24px rgba(37,243,255,0.04)}
+    .gallery-header p{color:var(--muted);margin:0;font-size:0.95rem}
+
+    /* Image gallery grid */
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+      gap:16px;
+      margin-bottom:32px;
+    }
+
+    .gallery-item{
+      position:relative;
+      overflow:hidden;
+      border-radius:10px;
+      background:var(--card-bg);
+      border:1px solid rgba(37,243,255,0.04);
+      box-shadow:0 12px 40px rgba(2,8,24,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      transition:all 0.3s ease;
+      cursor:pointer;
+      aspect-ratio:1;
+    }
+
+    .gallery-item:hover{
+      transform:translateY(-6px);
+      box-shadow:0 20px 60px rgba(37,243,255,0.08), inset 0 1px 0 rgba(255,255,255,0.02);
+      border-color:rgba(37,243,255,0.08);
+    }
+
+    .gallery-item img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform 0.4s ease;
+    }
+
+    .gallery-item:hover img{
+      transform:scale(1.05);
+    }
+
+    .gallery-item-label{
+      position:absolute;
+      bottom:0;
+      left:0;
+      right:0;
+      background:linear-gradient(180deg, transparent, rgba(0,8,20,0.9));
+      padding:16px 12px 12px;
+      color:var(--accent);
+      font-weight:600;
+      font-size:0.85rem;
+      opacity:0;
+      transition:opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-item-label{opacity:1}
+
+    footer{
+      margin-top:40px;
+      padding:24px 12px 40px;
+      color:var(--muted);
+      font-size:0.9rem;
+      letter-spacing:0.6px;
+      border-top:1px dashed rgba(37,243,255,0.03);
+    }
+
+    .footer-text{margin:0}
+    .credits{margin-top:8px;font-size:0.9rem}
+
+    /* Mobile responsive */
+    @media(max-width:768px){
+      h1{font-size:1.6rem}
+      .gallery{grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));gap:12px}
+      .header-content{flex-direction:column;text-align:center}
+      nav{justify-content:center}
+    }
+
+    /* Lightbox modal */
+    .lightbox{
+      display:none;
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:rgba(0,0,0,0.92);
+      z-index:1000;
+      opacity:0;
+      transition:opacity 0.3s ease;
+    }
+    .lightbox.active{display:flex;opacity:1;align-items:center;justify-content:center}
+    .lightbox-content{
+      position:relative;
+      max-width:90vw;
+      max-height:90vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .lightbox-image{
+      max-width:100%;
+      max-height:90vh;
+      object-fit:contain;
+      border-radius:8px;
+      box-shadow:0 0 60px rgba(37,243,255,0.2);
+    }
+    .lightbox-close{
+      position:absolute;
+      top:20px;
+      right:20px;
+      width:40px;
+      height:40px;
+      background:rgba(37,243,255,0.08);
+      border:1px solid rgba(37,243,255,0.08);
+      border-radius:50%;
+      color:#6ff3ff;
+      font-size:28px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:all 0.3s ease;
+    }
+    .lightbox-close:hover{background:rgba(37,243,255,0.15);transform:scale(1.1)}
+    .lightbox-nav{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:40px;
+      height:40px;
+      background:rgba(37,243,255,0.08);
+      border:1px solid rgba(37,243,255,0.08);
+      border-radius:50%;
+      color:#6ff3ff;
+      font-size:20px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:all 0.3s ease;
+    }
+    .lightbox-nav:hover{background:rgba(37,243,255,0.15);transform:scale(1.1)}
+    .lightbox-prev{left:20px}
+    .lightbox-next{right:20px}
+    .lightbox-info{
+      position:absolute;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      background:rgba(0,8,20,0.8);
+      color:#9ff5ff;
+      padding:8px 14px;
+      border-radius:6px;
+      font-size:0.9rem;
+      font-weight:600;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="brand">
+        <div class="logo"><img src="images/vox_logo-removebg-preview.png" alt="Vox logo"></div>
+        <div>
+          <h1>VRChat Gallery</h1>
+          <p class="lead">Voxtek Community Photos</p>
+        </div>
+      </div>
+      <nav aria-label="Navigation">
+        <a class="nav-link" href="vox website.html">← Back to Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="gallery-header">
+      <h2>VRChat Photos</h2>
+      <p>A collection of memorable moments and captures from our community in VRChat.</p>
+    </section>
+
+    <section class="gallery" role="region" aria-label="VRChat photo gallery">
+      <div class="gallery-item">
+        <img src="vrchat photos/angy huh.png" alt="Angy Huh - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Angy Huh</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/boring vox.jpeg" alt="Boring Vox - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Boring Vox</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/calm down bitch.jpeg" alt="Calm Down - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Calm Down</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/funny meme vx.jpeg" alt="Funny Meme VX - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Funny Meme VX</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/funny.jpeg" alt="Funny - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Funny</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/goober face vox.jpeg" alt="Goober Face Vox - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Goober Face Vox</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/goober.jpeg" alt="Goober - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Goober</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/nobody cares.png" alt="Nobody Cares - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Nobody Cares</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/vox hug me.jpeg" alt="Vox Hug Me - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Vox Hug Me</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="vrchat photos/yeees vox.jpeg" alt="Yeees Vox - VRChat photo" loading="lazy">
+        <div class="gallery-item-label">Yeees Vox</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#8249;</button>
+      <img id="lightboxImage" class="lightbox-image" src="" alt="Gallery image in lightbox">
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">&#8250;</button>
+      <div class="lightbox-info">
+        <span id="lightboxCaption"></span> • <span id="lightboxCount"></span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-text">© 2025 Voxtek — VRChat Community Gallery. A fan project inspired by Hazbin Hotel.</p>
+    <p class="credits">Credits: Coding by <strong>cosmicbunny</strong>. Art & animations by <strong>Twigbee</strong>.</p>
+  </footer>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxCount = document.getElementById('lightboxCount');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const galleryItems = document.querySelectorAll('.gallery-item img');
+    let currentIndex = 0;
+
+    // Convert gallery items to array for easier navigation
+    const images = Array.from(galleryItems).map(img => ({
+      src: img.src,
+      alt: img.alt,
+      caption: img.nextElementSibling?.textContent || img.alt
+    }));
+
+    // Open lightbox on image click
+    galleryItems.forEach((img, index) => {
+      img.addEventListener('click', () => {
+        currentIndex = index;
+        openLightbox();
+      });
+      img.style.cursor = 'pointer';
+    });
+
+    function openLightbox() {
+      const image = images[currentIndex];
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCaption.textContent = image.caption;
+      lightboxCount.textContent = `${currentIndex + 1} / ${images.length}`;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      openLightbox();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      openLightbox();
+    }
+
+    // Event listeners
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxNext.addEventListener('click', nextImage);
+    lightboxPrev.addEventListener('click', prevImage);
+
+    // Close on background click
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+  </script>
+</body>
+</html>

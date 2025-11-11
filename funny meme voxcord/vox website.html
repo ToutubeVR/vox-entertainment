@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voxtek — Hazbin Hotel Fan Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+  /* Blue cyber / VoxTek theme (neon cyan, grid, scanlines) */
+    @keyframes cyberBg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body {
+      margin: 0;
+      font-family: "Rajdhani", sans-serif;
+      background: radial-gradient(900px 500px at 10% 10%, rgba(57,240,255,0.03), transparent), linear-gradient(180deg,#021026,#07173a);
+      color: #dff8ff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 64px 20px 26px;
+      position: relative;
+      background: linear-gradient(180deg, rgba(0,8,20,0.6), transparent);
+      border-bottom: 1px solid rgba(63,200,255,0.04);
+    }
+
+    /* animated neon bar */
+    header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #25f0ff, #3b9eff, #25f0ff);
+      background-size: 200% 100%;
+      animation: glowBar 6s linear infinite;
+    }
+
+    @keyframes glowBar {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    h1 {
+      font-family: "Orbitron", sans-serif;
+      font-size: 2.6em;
+      text-transform: uppercase;
+      color: #6ff3ff;
+      text-shadow: 0 8px 40px rgba(63,200,255,0.08);
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 1.05em;
+      color: #cfeff6;
+      max-width: 760px;
+      margin: 0 auto 18px;
+    }
+
+    .logo {
+      margin-top: 18px;
+      width: 220px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 18px 60px rgba(37,243,255,0.06), inset 0 -6px 18px rgba(0,0,0,0.25);
+      background: linear-gradient(180deg, rgba(37,243,255,0.03), rgba(59,158,255,0.02));
+      padding:8px;
+    }
+  .logo img{width:204px;height:auto;display:block}
+
+  /* Social button styling */
+  .social-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:rgba(37,243,255,0.02);color:#9ff5ff;text-decoration:none;border:1px solid rgba(37,243,255,0.04);font-weight:700}
+  .social-btn:hover{box-shadow:0 12px 40px rgba(37,243,255,0.06);transform:translateY(-3px)}
+  .social-icon{width:18px;height:18px;display:inline-block;flex:0 0 18px;fill:currentColor}
+
+    /* Floating sidebar ad */
+    .ad-sidebar{
+      position:fixed;
+      right:16px;
+      top:50%;
+      transform:translateY(-50%);
+      width:220px;
+      background:linear-gradient(180deg, rgba(2,16,38,0.95), rgba(4,28,62,0.92));
+      border:1px solid rgba(37,243,255,0.08);
+      border-radius:12px;
+      padding:16px;
+      box-shadow:0 20px 60px rgba(2,8,24,0.8), inset 0 1px 0 rgba(37,243,255,0.04);
+      backdrop-filter:blur(8px);
+      z-index:100;
+      text-align:center;
+    }
+    .ad-sidebar img{
+      width:100%;
+      height:auto;
+      border-radius:8px;
+      margin-bottom:10px;
+      box-shadow:0 8px 24px rgba(37,243,255,0.04);
+    }
+    .ad-sidebar h3{
+      font-family:Orbitron;
+      font-size:0.95rem;
+      color:#6ff3ff;
+      text-shadow:0 4px 12px rgba(37,243,255,0.04);
+      margin:8px 0;
+    }
+    .ad-sidebar p{
+      font-size:0.8rem;
+      color:#b5e4f0;
+      margin:6px 0;
+      line-height:1.3;
+    }
+    .ad-sidebar .badge{
+      display:inline-block;
+      background:rgba(37,243,255,0.08);
+      color:#9ff5ff;
+      padding:4px 8px;
+      border-radius:6px;
+      font-weight:700;
+      font-size:0.75rem;
+      margin-top:8px;
+      border:1px solid rgba(37,243,255,0.06);
+    }
+
+    @media(max-width:1200px){
+      .ad-sidebar{display:none}
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* === Card sections === */
+    .section {
+      position: relative;
+      margin: 24px auto;
+      padding: 22px;
+      width: 92%;
+      max-width: 980px;
+      background: linear-gradient(180deg, rgba(2,16,38,0.6), rgba(4,28,62,0.55));
+      border: 1px solid rgba(37,243,255,0.04);
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 12px 40px rgba(2,8,24,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+
+    .section:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 35px rgba(0, 255, 255, 0.4);
+    }
+
+    h2 {
+      font-family: "Orbitron", sans-serif;
+      color: #7ff7ff;
+      font-size: 1.35em;
+      margin-bottom: 12px;
+    }
+
+    iframe {
+      margin: 12px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 640px;
+      height: 320px;
+      border: 1px solid rgba(37,243,255,0.05);
+      box-shadow: 0 12px 40px rgba(2,8,24,0.55);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    iframe:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 24px 12px 40px;
+      color: #bfeef7;
+      font-size: 0.95em;
+      letter-spacing: 0.6px;
+    }
+
+    /* animated grid and subtle scanlines for cyber feel */
+    body::before{
+      content:"";position:fixed;inset:0;z-index:0;background-image:linear-gradient(transparent 23px, rgba(37,243,255,0.02) 24px), linear-gradient(90deg, transparent 23px, rgba(37,243,255,0.02) 24px);background-size:24px 24px;opacity:0.6;mix-blend-mode:overlay;pointer-events:none;animation:gridShift 40s linear infinite;
+    }
+    @keyframes gridShift{from{background-position:0 0}to{background-position:480px 480px}}
+    body::after{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;background-image:repeating-linear-gradient(180deg, rgba(0,0,0,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 3px);mix-blend-mode:multiply;opacity:0.35}
+
+    /* Subtle scanline overlay for cyberpunk texture */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.03) 0px,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="ad-sidebar" aria-label="Voxtek Angelic Security advertisement">
+    <img src="images/image_2025-11-11_153743246-removebg-preview.png" alt="Voxtek Angelic Security emblem" loading="lazy">
+    <h3>VOXTEK</h3>
+    <p>Angelic Security</p>
+    <p style="font-size:0.75rem;color:#7ff7ff;margin-top:8px">Premium protection & community care.</p>
+    <div class="badge">ACTIVE</div>
+  </aside>
+
+  <header>
+    <h1>Voxtek</h1>
+    <p>A Hazbin Hotel–inspired fan hub for the V's and the community.</p>
+    <div style="margin-top:12px">
+      <a href="images.html" style="display:inline-block;margin:4px;padding:8px 12px;border-radius:8px;background:rgba(37,243,255,0.02);color:#9ff5ff;text-decoration:none;border:1px solid rgba(37,243,255,0.04);font-weight:600;font-size:0.9rem">📸 VRChat Gallery</a>
+    </div>
+    <div class="logo"><img src="images/vox_logo-removebg-preview.png" alt="Vox logo"></div>
+  </header>
+
+  <section class="section">
+    <h2>About Voxtek</h2>
+    <p>Voxtek is a fan-run Hazbin Hotel themed hub focused on community, media, and the "V" characters like Vox, Velvet, and Valentino. We collect artwork, clips, and community projects while keeping a tidy and professional presentation.</p>
+  </section>
+
+  <section class="section">
+    <h2>Follow Us</h2>
+    <p>Stay tuned to our social channels for clips, edits, and community events.</p>
+    <p>
+      <a class="social-btn" href="https://www.tiktok.com/@voxtok3" target="_blank" rel="noopener noreferrer" aria-label="Voxtok @voxtok3" style="margin:8px">
+        <svg class="social-icon" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M216.5 72.3c-11.3-1-21.5-4.8-29.6-11.5v92.5a39.2 39.2 0 0 1-39.2 39.2 39.7 39.7 0 0 1-20.6-5.6v42.1a81 81 0 0 0 41.2 10.7c45 0 81.5-36.5 81.5-81.5V97.2a63.6 63.6 0 0 1-33.8-24.9z"/></svg>
+        <span>Voxtok — @voxtok3</span>
+      </a>
+      <a class="social-btn" href="https://www.instagram.com/voxstagram666_/" target="_blank" rel="noopener noreferrer" aria-label="Voxstagram @voxstagram666_" style="margin:8px">
+        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zM18.4 6.3a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>
+        <span>Voxstagram — @voxstagram666_</span>
+      </a>
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Merch — Youtooz Vox Plush</h2>
+    <p>Looking for an official Vox plush? The Youtooz 9-inch Vox plush is available from the official store.</p>
+    <p>
+      <a class="social-btn" href="https://youtooz.com/products/vox-plush-9-inch?srsltid=AfmBOoo4z7ZgUBLkhAXVBRbIJIcOqbP4sPN2kMEADPJxy2F2ft6o4vR7" target="_blank" rel="noopener noreferrer" aria-label="Youtooz Vox Plush" style="margin:8px">
+        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 7h10v2H7zM5 9v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9H5zm7-6a2 2 0 0 0-2 2v2h4V5a2 2 0 0 0-2-2z"/></svg>
+        <span>Get the Vox Youtooz Plush (9")</span>
+      </a>
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Community & VRChat</h2>
+    <p>Join our VRChat group to meet other fans and attend events.</p>
+    <p>
+      <a class="social-btn" href="https://vrchat.com/home/group/grp_817be4b3-8451-40fa-81e9-9e2d4c6bc7e4" target="_blank" rel="noopener noreferrer" aria-label="Voxtek VRChat Group" style="margin:8px">
+        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2C6.5 2 2 5.6 2 10c0 2.9 1.8 5.4 4.7 6.9L6 22l5.5-2.9c.4.1.9.1 1.3.1 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/></svg>
+        <span>Voxtek VRChat Group</span>
+      </a>
+
+      <!-- Discord join button -->
+      <a class="social-btn" href="https://discord.gg/eesnfn3RtH" target="_blank" rel="noopener noreferrer" aria-label="Join Voxtek Discord" style="margin:8px;background:linear-gradient(90deg,#5865f2,#6a7bfd);color:#fff;border-color:rgba(255,255,255,0.06)">
+        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.864-.608 1.249-1.84-.276-3.68-.276-5.485 0-.163-.405-.416-.874-.628-1.249a.077.077 0 0 0-.08-.037c-1.68.464-3.293 1.184-4.85 2.145a.067.067 0 0 0-.032.027C.356 9.02-.213 13.533.066 18.057a.082.082 0 0 0 .031.056c2.053 1.507 4.041 2.422 5.992 3.03a.077.077 0 0 0 .084-.027c.46-.63.87-1.295 1.226-1.994a.077.077 0 0 0-.041-.105c-.652-.247-1.27-.549-1.84-.892a.077.077 0 0 1-.007-.127c.124-.094.248-.19.365-.291a.077.077 0 0 1 .079-.01c3.89 1.79 8.092 1.79 11.87 0a.077.077 0 0 1 .082.009c.118.101.242.197.366.291a.077.077 0 0 1-.006.127c-.57.343-1.188.645-1.84.892a.077.077 0 0 0-.04.105c.36.7.77 1.365 1.223 1.994a.077.077 0 0 0 .084.027c1.96-.608 3.947-1.523 5.998-3.03a.077.077 0 0 0 .031-.056c.5-5.177-.838-9.63-3.888-13.636a.067.067 0 0 0-.031-.028zM8.02 15.331c-1.182 0-2.156-1.085-2.156-2.419 0-1.334.955-2.419 2.156-2.419 1.21 0 2.171 1.103 2.156 2.419 0 1.334-.955 2.419-2.156 2.419zm7.974 0c-1.182 0-2.156-1.085-2.156-2.419 0-1.334.955-2.419 2.156-2.419 1.21 0 2.171 1.103 2.156 2.419 0 1.334-.946 2.419-2.156 2.419z"/></svg>
+        <span>Join our Discord</span>
+      </a>
+    </p>
+
+    <div style="max-width:760px;margin:10px auto 0;background:rgba(0,0,0,0.18);border-radius:8px;padding:12px;border:1px solid rgba(37,243,255,0.04);text-align:left;color:#cfeff6;font-size:0.95rem">
+      <p style="margin:0 0 6px;font-weight:700;color:#9ff5ff">Discord safety & anti-raid note</p>
+      <p style="margin:0 0 6px">To help prevent raids, please complete Discord's verification checks when joining. We actively remove bot accounts and unverified accounts. If you're a bot or automated account, you will not be allowed unless previously approved by a moderator.</p>
+      <p style="margin:0;font-size:0.9rem;color:#bfeef7">.</p>
+    </div>
+  </section>
+
+  <section class="section" style="border-left:3px solid #25f0ff;text-align:left">
+    <h2 style="text-align:center">VRChat Community Rules</h2>
+    <div style="max-width:700px;margin:0 auto;font-size:0.95em;line-height:1.8">
+      <div style="background:rgba(37,243,255,0.05);border:1px solid rgba(37,243,255,0.08);border-radius:8px;padding:16px;margin-bottom:12px">
+        <p style="font-weight:700;color:#7ff7ff;margin:0 0 6px;text-align:center">──────  ［ ＲＵＬＥＳ ］  ──────</p>
+        <p style="color:#a8f0ff;font-size:0.9em;margin:0;text-align:center">Please make sure to read everything! ⚠️</p>
+      </div>
+
+      <div style="background:rgba(255,100,100,0.08);border:1px solid rgba(255,100,100,0.15);border-radius:8px;padding:12px;margin-bottom:12px">
+        <p style="color:#ff6b6b;font-weight:700;margin:0 0 6px">（18＋） WARNING</p>
+        <p style="color:#cfeff6;font-size:0.9em;margin:0">This is an adult community. Please ensure you meet age requirements.</p>
+      </div>
+
+      <div style="background:rgba(37,243,255,0.05);border-left:3px solid #e74c3c;border-radius:8px;padding:12px;margin-bottom:12px">
+        <p style="color:#ff6b6b;font-weight:700;margin:0 0 6px">{ NO Hate Speech }</p>
+        <ul style="color:#cfeff6;margin:6px 0;padding-left:20px;font-size:0.9em">
+          <li>This includes racism, homophobia, and slurs (even those you reclaim) and insults towards anyone's sexuality or religion.</li>
+          <li>Anything that's offensive (including memes and humor).</li>
+          <li>Please be respectful to all community members.</li>
+        </ul>
+      </div>
+
+      <div style="background:rgba(37,243,255,0.05);border-left:3px solid #e74c3c;border-radius:8px;padding:12px;margin-bottom:12px">
+        <p style="color:#ff6b6b;font-weight:700;margin:0 0 6px">{ No Fighting ｜ Causing Drama }</p>
+        <ul style="color:#cfeff6;margin:6px 0;padding-left:20px;font-size:0.9em">
+          <li>We wouldn't want any conflict to occur in the group that would then start drama.</li>
+          <li>This includes controversial and sensitive topics.</li>
+          <li>⚠️ Do warn about any sensitive topics shared without explicit permission from content creators.</li>
+        </ul>
+      </div>
+
+      <p style="color:#9ff5ff;font-size:0.85em;margin-top:16px;padding-top:12px;border-top:1px dashed rgba(37,243,255,0.1)">Thank you for helping keep our community safe and welcoming! 💙</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Featured Videos</h2>
+    <p>Check out these awesome clips and content from the community.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:14px">
+      <iframe src="https://www.youtube.com/embed/Ghb3XzSxflM" title="Featured Video 1" allowfullscreen style="width:100%;height:200px;border-radius:8px;border:1px solid rgba(37,243,255,0.05);box-shadow:0 12px 40px rgba(2,8,24,0.55)"></iframe>
+      <iframe src="https://www.youtube.com/embed/eKijdwUXXtQ" title="Featured Video 2" allowfullscreen style="width:100%;height:200px;border-radius:8px;border:1px solid rgba(37,243,255,0.05);box-shadow:0 12px 40px rgba(2,8,24,0.55)"></iframe>
+      <iframe src="https://www.youtube.com/embed/TFaU7bI_gD8" title="Featured Video 3" allowfullscreen style="width:100%;height:200px;border-radius:8px;border:1px solid rgba(37,243,255,0.05);box-shadow:0 12px 40px rgba(2,8,24,0.55)"></iframe>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Voxtek — Hazbin Hotel fan hub. All original IP belongs to its creators.</p>
+    <p style="margin-top:8px;color:#d8c6b0">Credits: Coding by <strong>cosmicbunny</strong>. Art & animations by <strong>Twigbee</strong>.</p>
+  </footer>
+
+</body>
+</html>

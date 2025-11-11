@@ -1,0 +1,8 @@
+# Robots.txt template
+# Replace BASE_URL in sitemap line with your real site URL, then rename to robots.txt at publish root.
+
+User-agent: *
+Disallow:
+
+# Sitemap location (update BASE_URL)
+Sitemap: BASE_URL/sitemap.xml
